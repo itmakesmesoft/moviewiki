@@ -1,11 +1,11 @@
-# from django.shortcuts import render
-# from .serializers import RegisterSerializer
-# from rest_framework.decorators import permission_classes
-# from rest_framework.permissions import IsAuthenticated
-# from django.conf import settings 
-# from rest_framework.response import Response
-# from rest_framework.decorators import api_view
-# from rest_framework import status
+from django.shortcuts import render
+from .serializers import RegisterSerializer
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticated
+from django.conf import settings 
+from rest_framework.response import Response
+from rest_framework.decorators import api_view
+from rest_framework import status
 
 # # Create your views here.
 # @api_view(['PUT'])

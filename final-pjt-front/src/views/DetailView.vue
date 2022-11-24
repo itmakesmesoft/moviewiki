@@ -1,12 +1,12 @@
 <template>
   <div class="container" style="padding: 0;">
     <div class="element">
-      <div class="content row m-0" :style="{ backgroundImage: 'linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url(https://image.tmdb.org/t/p/original/' + movie.backdrop_path + ')' }">
+      <div class="content row m-0" :style="{ backgroundImage: 'linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 1)), url(https://image.tmdb.org/t/p/original/' + movie.backdrop_path + ')' }">
         <div class="movie_info col-8">
           <h1 class="movie_title">{{ movie.title }}</h1>
           <table class="movie_summery">
             <tr>
-              <td>{{ movie.release_date.slice(0,4)}}</td>
+              <td>{{ movie.release_date }}</td>
               <td>{{ movie.vote_average }}점</td>
             </tr>
             <tr>
@@ -23,23 +23,24 @@
         <section class="row">
           <div class="col-8">
             <div class="information">
-              <p style="font-size: 30px; text-align:center;">줄거리</p>
+              <p style="font-size: 30px; text-align:center;">Overview</p>
               <div class="overview">
                 {{ movie.overview }}
               </div>
-            <div style="display: flex; flex-direction: row;">
-              <button class="btnGroup" v-b-modal.modal-xl @click="getVideo">Trailer</button>
-                <b-modal id="modal-xl" size="xl" :title="`${ this.movie.title }`">
-                  <div>
-                    <b-embed
-                      type="iframe"
-                      aspect="16by9"
-                      :src="`https://youtube.com/embed/${this.video}`"
-                      allowfullscreen
-                    ></b-embed>
+              <div style="display: flex; flex-direction: row;">
+                <button class="btnGroup" v-b-modal.modal-xl @click="getVideo">Trailer</button>
+                  <b-modal id="modal-xl" size="xl" :title="`${ this.movie.title }`">
+                    <div>
+                      <b-embed
+                        type="iframe"
+                        aspect="16by9"
+                        :src="`https://youtube.com/embed/${this.video}`"
+                        allowfullscreen
+                      ></b-embed>
                   </div>
                 </b-modal>
               </div>
+              <hr>
             </div>
             <div class="review">
               <ReviewList
@@ -58,7 +59,7 @@
                 :actor="actor"
                 class="actoritem col-4"
                 >
-                  <img :src="`https://image.tmdb.org/t/p/original/${ actor.profile_path }`">
+                  <img :src="`${ actor.profile_path }`">
                   <p>{{ actor.name }}</p>
                 </div>
               </div>
@@ -98,11 +99,13 @@ export default {
         genre_ids: null,
       },
       API_URL: this.$store.state.API_URL,
-      credit: [
+      actor: [
         {
           name: null,
+          profile_path: null,
         }
       ],
+      credit: [],
       video: '',
       settings: {
         suppressScrollY: false,
@@ -178,6 +181,15 @@ export default {
         }
       }).then((response) => {
         const credit = response.data.cast.slice(0,10)
+        console.log(credit)
+        for (let i=0; i<10; i++) {
+          if (credit[i].profile_path == null) {
+            credit[i].profile_path = `@/assets/default_person.jpg`
+          } else {
+            const tmp = credit[i].profile_path
+            credit[i].profile_path = `https://image.tmdb.org/t/p/original/${ tmp }`
+          }
+        }
         this.credit = credit
         console.log('credit')
         console.log(this.credit)
@@ -211,7 +223,7 @@ export default {
       return {
         '--back-url' :  'https://image.tmdb.org/t/p/original/'+ this.movie.backdrop_path
       }
-    }
+    },
   }
 
 }
@@ -308,7 +320,7 @@ section {
   margin: 0;
 }
 .section {
-  padding: 20px;
+  padding: 20px 20px 100px 20px;
 }
 .information {
   padding: 0 50px 0 0;
@@ -318,10 +330,12 @@ section {
   padding: 10px;
   text-align: left;
   min-height: 120px;
+  line-height: 2;
 }
 
 .review {
   margin-top: 50px;
+  padding: 0 50px 0 0;
 }
 
 .btnGroup{
@@ -332,6 +346,7 @@ section {
   border: 3px solid rgb(165, 165, 165);
   color: rgb(165, 165, 165);
   transition: 0.1s;
+  margin: 30px 10px;
 }
 .btnGroup:hover {
   background: rgb(255, 255, 255);

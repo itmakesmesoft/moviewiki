@@ -127,6 +127,7 @@ import { slider, slideritem } from 'vue-concise-slider'
 
 .slider_content > caption {
   line-height: 60px;
+  font-family: 'Noto Sans KR', sans-serif;
   font-size: 60px;    /* 원래 60*/
   margin-bottom: 70px; 
   color: white;

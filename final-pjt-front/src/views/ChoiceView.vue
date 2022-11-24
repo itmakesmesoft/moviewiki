@@ -29,6 +29,7 @@
         <div class="wrap_movie col-2"
         v-for="(movie, idx) in suggest_movies"
         :key="`movie_${idx}`"
+        style="cursor: pointer;"
         >
           <a @click="DetailMovie(movie.id)">
             <div class="movie">

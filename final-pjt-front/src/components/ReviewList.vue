@@ -1,23 +1,30 @@
 <template>
   <div class='review_list'>
-    <div class="review_item"
-    v-for="(review, idx) in review_list"
-    :key="`review_${idx}`"
-    :review="review"
-    >
-      <div>
-        {{ review.user }} <span>{{ review.created_at }}</span>
-        <span>{{ review.rating }}점</span>
-        <span>{{ review.content }}</span> |
-        <button v-if="review.user==user.email" @click="deleteReview(review.id)">삭제</button>
+    <p style="font-size:30px; text-align: center; margin-bottom: 20px;">Reviews</p>
+    <div class="wrap_review_item">
+      <div class="review_item row"
+      v-for="(review, idx) in review_list"
+      :key="`review_${idx}`"
+      :review="review"
+      >
+        <div class="col-10" style="display: flex; flex-direction: row; align-items: flex-start">
+          <b-form-rating id="rating rating-no-border-inline"  variant="warning" inline no-border value="value" v-model="review.rating"></b-form-rating>
+          <div class="ps-3">
+            <p class="review_info">{{ review.user }} <span class="review_info_created">{{ review.created_at }}</span></p>
+            <p>{{ review.content }}</p>
+          </div>
+        </div>
+        <div class="col-2" style="text-align: right;">
+          <a class="review_delbtn" v-if="review.user==user.email" @click="deleteReview(review.id)">삭제</a>
+        </div>
       </div>
     </div>
     <form @submit.prevent="createComment" method="POST">
-      <div>
-        <label for="rating-inline"></label>
-        <b-form-rating id="rating-inline" inline value="value" v-model="rating"></b-form-rating>
-      </div>
       <div class="textarea">
+        <div>
+          <label for="rating rating-no-border"></label>
+          <b-form-rating id="rating rating-no-border"  variant="warning" no-border value="value" v-model="rating"></b-form-rating>
+        </div>
         <input class="textarea_input" placeholder="Fixed height textarea" v-model="content" no-resize>
         <input class="textarea_submit" type="submit" value="입력">
       </div>
@@ -36,7 +43,9 @@ export default {
     return {
       content: null,
       rating: null,
-      user: null,
+      user: {
+        email: null,
+      },
       API_URL: this.$store.state.API_URL
     }
   },
@@ -50,7 +59,7 @@ export default {
   computed: {
     review_list() {
       return this.reviews
-    }
+    },
   },
   methods: {
     createComment() {
@@ -74,22 +83,24 @@ export default {
       })
     },
     deleteReview(review_id) {
-      axios({
-        method: 'delete',
-        url: `${this.API_URL}/api/v1/movies/comments/${review_id}/`,
-        headers: {
-          'Authorization': `Token ${this.$store.state.token}`
-        },
-      })
-      .then((res) => {
-        console.log(res)
-        const itemToFind = this.review_list.find(function(item) {return item.id === review_id})
-        const idx = this.review_list.indexOf(itemToFind)
-        if (idx > -1) this.review_list.splice(idx, 1)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
+      if (confirm("댓글을 삭제하시겠습니까?") === true) {
+        axios({
+          method: 'delete',
+          url: `${this.API_URL}/api/v1/movies/comments/${review_id}/`,
+          headers: {
+            'Authorization': `Token ${this.$store.state.token}`
+          },
+        })
+        .then((res) => {
+          console.log(res)
+          const itemToFind = this.review_list.find(function(item) {return item.id === review_id})
+          const idx = this.review_list.indexOf(itemToFind)
+          if (idx > -1) this.review_list.splice(idx, 1)
+        })
+        .catch((error) => {
+          console.log(error)
+        })
+      } 
     },
     getUser() {
       axios({
@@ -139,75 +150,6 @@ CORE STYLES
 =====
 */
 
-.rating{
-  --uiRatingColor: var(--ratingColor, #eee);
-  --uiRatingColorActive: var(--ratingColorActive, #ffcc00);
-
-  display: var(--ratingDisplay, flex);
-  font-size: var(--ratingSize, 1rem);
-  color: var(--uiRatingColor);
-}
-    
-.rating__control:nth-of-type(1):focus ~ .rating__item:nth-of-type(1)::before,
-.rating__control:nth-of-type(2):focus ~ .rating__item:nth-of-type(2)::before,
-.rating__control:nth-of-type(3):focus ~ .rating__item:nth-of-type(3)::before,
-.rating__control:nth-of-type(4):focus ~ .rating__item:nth-of-type(4)::before,
-.rating__control:nth-of-type(5):focus ~ .rating__item:nth-of-type(5)::before{
-  content: ""; 
-  box-shadow: 0 0 0 var(--ratingOutlineWidth, 4px) var(--uiRatingColorActive);
-
-  position: absolute;
-  top: -.15em;
-  right: 0;
-  bottom: -.15em;
-  left: 0;
-  z-index: -1;
-}
-
-.rating__item{
-  cursor: pointer;  
-  position: relative;
-}
-
-.rating__item{
-  padding-left: .25em;
-  padding-right: .25em;
-}
-
-.rating__star{
-  display: block;
-  width: 1em;
-  height: 1em;
-
-  fill: currentColor;
-  stroke: var(--ratingStroke, #222);
-  stroke-width: var(--ratingStrokeWidth, 1px);
-}
-
-.rating:hover,
-.rating__control:nth-of-type(1):checked ~ .rating__item:nth-of-type(1),
-.rating__control:nth-of-type(2):checked ~ .rating__item:nth-of-type(-n+2),
-.rating__control:nth-of-type(3):checked ~ .rating__item:nth-of-type(-n+3),
-.rating__control:nth-of-type(4):checked ~ .rating__item:nth-of-type(-n+4),
-.rating__control:nth-of-type(5):checked ~ .rating__item:nth-of-type(-n+5){
-  color: var(--uiRatingColorActive);
-}
-
-.rating__item:hover ~ .rating__item{
-  color: var(--uiRatingColor);
-}
-
-/*
-=====
-SETTINGS
-=====
-*/
-
-.rating{
-  --ratingSize: 2rem;
-  --ratingColor: #eee;
-  --ratingColorActive: #ffcc00;
-}
 
 /*
 =====
@@ -221,15 +163,37 @@ DEMO
   margin: 0;
 } */
 
+.rating, .form-control {
+  background: transparent !important;
+}
+
 .review_list {
   text-align: left;
 }
 
+.review_list .wrap_review_item {
+  padding: 0 30px 0 0;
+}
 .review_list .review_item {
   padding: 10px 0;
   font-weight: 300;
-  border-bottom: 1px solid rgb(29, 29, 29);
+  border-bottom: 1px solid rgb(16 16 16);
   color: rgb(173, 173, 173);
+}
+.review_info {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+.review_info_created {
+  padding-left: 10px;
+  color: rgb(105, 105, 105);
+}
+.review_delbtn {
+  color: rgb(105, 105, 105);
+  cursor: pointer;
+}
+.review_delbtn:hover {
+  color: white;
 }
 
 .textarea {
@@ -238,6 +202,7 @@ DEMO
   border-bottom: 1px solid rgb(63, 63, 63);
   display: flex;
   flex-direction: row;
+  margin-top: 30px;
 }
 
 .textarea_input {

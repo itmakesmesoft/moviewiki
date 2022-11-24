@@ -163,6 +163,9 @@ export default new Vuex.Store({
       state.token = token
       router.push({ name: 'movie' })
     },
+    REMOVE_TOKEN(state) {
+      state.token = null
+    }
   },
   actions: {
     getMovies(context) {
@@ -234,6 +237,9 @@ export default new Vuex.Store({
       })
       .catch(error => console.log(error))
     },
+    logOut(context) {
+      context.commit('REMOVE_TOKEN')
+    }
   },
   modules: {
   }
