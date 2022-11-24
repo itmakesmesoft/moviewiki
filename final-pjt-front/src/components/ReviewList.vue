@@ -127,11 +127,6 @@ export default {
 </script>
 
 <style>
-/*
-=====
-DEPENDENCES
-=====
-*/
 
 .screen-reader{
   width: var(--screenReaderWidth, 1px) !important;
@@ -143,25 +138,6 @@ DEPENDENCES
   clip: var(--screenReaderClip, rect(1px, 1px, 1px, 1px)) !important;
   overflow: var(--screenReaderOverflow, hidden) !important;
 }
-
-/*
-=====
-CORE STYLES
-=====
-*/
-
-
-/*
-=====
-DEMO
-=====
-*/
-
-/* body{
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Open Sans, Ubuntu, Fira Sans, Helvetica Neue, sans-serif;
-  font-size: 1rem;
-  margin: 0;
-} */
 
 .rating, .form-control {
   background: transparent !important;

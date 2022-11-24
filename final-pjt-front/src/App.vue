@@ -41,6 +41,7 @@ export default {
     searchMovie() {
       console.log(this.movieTitle)
       this.$router.push({ name: 'search', params: { movie_title: this.movieTitle } })
+
     },
     goHome() {
       this.$router.push({ name: 'movie' })
@@ -86,7 +87,7 @@ a {
   font-family: 'Poppins', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  /* text-align: center;  수정*/  
   color: #dee2e6;
   /* background: red; */
 }
