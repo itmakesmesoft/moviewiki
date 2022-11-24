@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h3>꼭 봐야하는 콘텐츠</h3>
     <div class="wrap_slider">
       <button @click="slide" class="slider_btn" id="left"><img src="@/assets/left-arrow.png" alt=""></button>
       <slider ref="slider" :options="options">

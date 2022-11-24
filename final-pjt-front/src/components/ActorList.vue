@@ -1,8 +1,7 @@
 <template>
 <div>
-  <h3>Top 20! 오늘의 화제인물을 만나보세요</h3>
-  <div class="row row-horizon">
-  <b-card-group>
+  <div class="row-horizon container">
+  <b-card-group class="display: inline-block!important">
     <div
       v-for="actor in actors"
       :key="actor.id"
@@ -13,7 +12,7 @@
       v-if="actor.adult==false"
       width="80px"
       @click="getActorDetail(actor.id)"
-      style="margin: 10px;"
+      class="actor_img"
       >
     </div>
   </b-card-group>
@@ -41,5 +40,14 @@ export default {
 </script>
 
 <style>
-
+.row-horizon {
+  padding: 0 50px;
+}
+.actor_img{
+  height: 120px;
+  width: 120px;
+  object-fit: cover;
+  border-radius: 60px;
+  margin: 15px;
+}
 </style>

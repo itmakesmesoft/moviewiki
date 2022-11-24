@@ -5,12 +5,15 @@
     />
     <div class="article">
       <section>
+        <h3 class="main_caption">꼭 봐야하는 콘텐츠</h3>
         <MovieList :movies="movies"/>
       </section>
       <section>
+        <h3 class="main_caption">요즘 뜨는 콘텐츠</h3>
         <TrendingList :trending="trending"/>
       </section>
       <section style="margin-bottom: 0;">
+        <h3 class="main_caption">Top 20 화제인물</h3>
         <ActorList :actors="actors"/>
       </section>
     </div>
@@ -143,5 +146,9 @@ section {
 
 .movie_item img:active {
   opacity: 0.5;
+}
+.main_caption {
+  margin: 70px 0 20px 0;
+  text-align: center;
 }
 </style>
