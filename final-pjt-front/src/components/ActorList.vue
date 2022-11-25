@@ -1,6 +1,6 @@
 <template>
-<div>
-  <div class="row-horizon container">
+<div class="Actorlist container">
+  <div class="inner_container">
   <b-card-group class="display: inline-block!important">
     <div
       v-for="actor in actors"
@@ -10,7 +10,6 @@
       <img
       :src="`https://image.tmdb.org/t/p/original/${ actor.profile_path }`"     
       v-if="actor.adult==false"
-      width="80px"
       @click="getActorDetail(actor.id)"
       class="actor_img"
       >
@@ -40,8 +39,14 @@ export default {
 </script>
 
 <style>
-.row-horizon {
+.Actorlist {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.inner_container {
   padding: 0 50px;
+  
 }
 .actor_img{
   height: 120px;
@@ -49,5 +54,6 @@ export default {
   object-fit: cover;
   border-radius: 60px;
   margin: 15px;
+  cursor: pointer;
 }
 </style>

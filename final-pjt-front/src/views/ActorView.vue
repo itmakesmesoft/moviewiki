@@ -68,9 +68,7 @@ export default {
   height: 100%;
   min-height: 500px;
   background: black;
-  margin: 100px;
-
-
+  margin: 100px 0 0 100px;
 }
 
 .actor_content {

@@ -1,5 +1,5 @@
 <template>
-  <div class="about">
+  <div class="about container" style="max-width: 1000px; margin-bottom: 0;">
     <div class="about_content">
       <caption>
         발견의 기쁨, 더 나은 경험.
@@ -202,7 +202,6 @@ export default {
 }
 
 .about_content {
-  margin-bottom: 60px;
   height: 100%;;
   display: flex;
   flex-direction: column;

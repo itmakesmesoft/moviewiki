@@ -10,7 +10,7 @@
         <div class="col-10" style="display: flex; flex-direction: row; align-items: flex-start">
           <b-form-rating id="rating rating-no-border-inline"  variant="warning" inline no-border value="value" v-model="review.rating"></b-form-rating>
           <div class="ps-3">
-            <p class="review_info">{{ review.user }} <span class="review_info_created">{{ review.created_at }}</span></p>
+            <p class="review_info">{{ review.user }} <span class="review_info_created">{{ review.created_at.slice(0,10) }}</span></p>
             <p>{{ review.content }}</p>
           </div>
         </div>

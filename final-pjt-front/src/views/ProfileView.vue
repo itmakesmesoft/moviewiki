@@ -4,31 +4,32 @@
       <h1>{{user.nickname}}님의 페이지</h1>
       <form @submit.prevent="changeProfile">
         <div>
-          <label for="nickname">닉네임</label>
-          <input id="nickname" class="inputgroup" type="text" disabled="true" v-model="user.nickname" >
-        </div>
-        <div>
           <label for="email">이메일</label>
           <input id="email" class="inputgroup" type="text" disabled="true" v-model="user.email">
         </div>
         <div>
+          <label for="nickname">닉네임</label>
+          <input id="nickname" class="inputgroup" type="text" disabled="true" v-model="user.nickname" >
+        </div>
+        <div v-if="change_profile" style="margin-bottom: 30px;">
           <label for="profile_image">프로필 사진</label>
           <input class="inputgroup" type="file" id="profile_image" multiple @change="ImgChange" ref="serveyImage">
         </div>
-        <input type="submit" v-if="change_profile" value="수정 완료">
+        <input v-if="change_profile" type="submit" value="수정 완료">
         <button v-if="change_profile" >취소</button>
-        <button v-else @click="ProfileInputToggle">회원정보 수정</button>
+        <button v-else @click="ProfileInputToggle" style="margin-top: 30px;">회원정보 수정</button>
       </form>
 
-      <button v-if="!change_password" @click="PasswordInputToggle">비밀번호 변경</button>
-      <form v-if='change_password' @submit.prevent="changePassword">
+      <button v-if="!change_password" @click="PasswordInputToggle" style="margin-top: 5px;">비밀번호 변경</button>
+      <form v-if='change_password' @submit.prevent="changePassword" style="margin-top: 20px;">
+        <h5>새로운 비밀번호 입력</h5>
         <input id="pw_input1" class="inputgroup" type="password" v-model="new_password1">
         <input id="pw_input2" class="inputgroup" type="password" v-model="new_password2">
         <input type="submit" value="비밀번호 변경 제출">
         <button @click="PasswordInputToggle">취소</button>
       </form>
       <section>
-        <h3>내가 쓴 리뷰</h3>
+        <h5 style="margin: 30px 0;">내가 쓴 리뷰</h5>
         <div
         v-for="(review, idx) in userReview"
         :key="`review_${idx}`"
@@ -223,9 +224,9 @@ export default {
   margin: 15px 0 3px 0;
 }
 
-.myPage input {
+.myPage input, .myPage button {
   width: 100%;
-  height: 35px;
+  height: 40px;
   padding: 5px;
   color: inherit;
   background: white;
@@ -233,11 +234,11 @@ export default {
   box-sizing: border-box;
 }
 
-.myPage .active {
+/* .myPage .active {
   border: 2px solid black;
   background: rgb(240, 248, 255);
   color: black;
-}
+} */
 
 /* ------------------------ */
 
