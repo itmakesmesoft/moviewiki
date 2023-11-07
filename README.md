@@ -1,4 +1,4 @@
-#🎬 MOVIEWIKI
+# 🎬 MOVIEWIKI
 광주 3반 우수 프로젝트 🏅 MOVIEWIKI 입니다.
 알고리즘 기반으로 영화를 재미있게 추천해드리는 서비스입니다.
 
